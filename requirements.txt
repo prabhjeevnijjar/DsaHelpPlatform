@@ -1,0 +1,68 @@
+A platform where app the DSA resources are referenced with
+5 star rating system by user upvote/downvote a particular resources
+search for resources filters based on ratings(bad to good/good to bad),
+reviews(most reviews to least reviews/vice-versa),
+pagination support, 
+User can log in and able to upvote down vote review a resource 
+also recommend a new resource under each category with link to resource.
+Data Structures & Algo Resources :
+1. Arrays
+2. Greedy 
+3. Hashing 
+4. Stack 
+5. Queue 
+6. Recursion 
+7. Linked List
+8. Binary Trees
+9. Binary Search Trees
+10. Strings
+11. Backtracking
+12. Binary Search
+13. Dynamic Programming
+14. Heaps
+15. Graphs
+16. Tries
+
+Programming Languages Resources
+1. Java
+2. C++
+3. Python
+4. C
+5. JavaScript
+6. C#
+7. PHP
+8. R
+9. Objective-C
+10. Swift
+11. TypeScript
+12. Kotlin
+13. go
+14. Rust
+15. Ruby
+16. Scala
+17. Ada
+18. Dart
+19. Pearl
+20. Delphi/Pascal
+21. Haskell
+
+Database resources
+1.MYSQL
+2.Postgres
+3.Mongodb
+
+DevOps tools Resources:
+1. AWS
+2. Kubernetes
+3. Git
+4. Jenkins
+5. Chef
+6. Cucumber
+7. Puppet
+8. Docker
+9. Slack
+10. MS Teams
+11. Skype
+12. Zoom
+13. GCP
+14. Azure
