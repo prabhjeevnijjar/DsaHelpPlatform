@@ -1,0 +1,22 @@
+{
+  "name": "dsahelpplatform",
+  "version": "1.0.0",
+  "description": "platform serves for reviews and rating all the dsa helps available on the interne",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prabhjeevnijjar/DsaHelpPlatform.git"
+  },
+  "author": "prabhjeev singh nijjar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prabhjeevnijjar/DsaHelpPlatform/issues"
+  },
+  "homepage": "https://github.com/prabhjeevnijjar/DsaHelpPlatform#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
