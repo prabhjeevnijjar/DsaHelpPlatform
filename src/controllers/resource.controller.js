@@ -1,26 +1,32 @@
-const {
-  createRecRes,
-  getRecRes,
-} = require("../services/recommendedres.service");
+const { createResource, getResource } = require("../services/resource.service");
 module.exports = {
   async createResource(req, res, next) {
     try {
       let data = {
-        postedBy: req.user, //Get from auth middleware
-        link: req.body.link,
-        description: req.body.description,
+        postedBy: req.user,
+        name: req.body.name, //Get from auth middleware
+        resourcetype: req.body.resourcetype,
+        resourcesubtype: req.body.resourcesubtype,
+        resourcelink: req.body.resourcelink,
+        resourceauthor: req.body.resourceauthor,
+        resourcestudytype: req.body.resourcestudytype,
+        postedDate: req.body.postedDate,
+        status: req.body.status,
       };
-      await createRecRes(data, res)
+      console.log(data);
+      await createResource(data, res)
         .then()
         .catch((err) => {
           console.log(err);
         });
     } catch (error) {
+      console.log(error);
       res.status(404).json({ message: error });
+      next(error);
     }
   },
-  async getAllResources(req, res) {
-    await getRecRes(res)
+  async getResources(req, res) {
+    await getResource(res)
       .then((fetchedData) => {
         if (fetchedData) {
           res.status(200).json({ success: 1, data: fetchedData });

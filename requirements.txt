@@ -5,6 +5,8 @@ reviews(most reviews to least reviews/vice-versa),
 pagination support, 
 User can log in and able to upvote down vote review a resource 
 also recommend a new resource under each category with link to resource.
+Latest recommendations page:
+show recommendation and recommendor name 
 Data Structures & Algo Resources :
 1. Arrays
 2. Greedy 
@@ -69,24 +71,26 @@ DevOps tools Resources:
 
 ROUTES
 
-SIGNUP
+[DONE]SIGNUP
 POST-> "/api/signup"
 
-LOGIN
+[DONE]LOGIN
 POST-> "/api/login"
 
-AUTH MIDDLEWARE--
+[DONE]AUTH MIDDLEWARE--
 
-HOMEPAGE
+[]HOMEPAGE
 GET-> "api/homepage"
 
-RESOURCES
-GET-> "api/resources/"
+[DONE]RECOMMEND RESOURCE
+GET-> "api/newresource/"
+POST-> "api/newresource/" 
 
-REVIEW
-GET-> "api/review/:resourceId"
-POST-> "api/review/:resourceId"
+[]RESOURCES
+[DONE]GET-> "api/review/:resourceId"
+[DONE]POST-> "api/review/:resourceId"
 PUT-> "api/review/:resourceId/:reviewId"
 DELETE-> "api/review/:resourceId/:reviewId"
 
-UPVOTE/DOWNVOTW
+[]UPVOTE/downvote
+[]STAR RATING
