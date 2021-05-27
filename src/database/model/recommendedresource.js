@@ -15,4 +15,9 @@ const recommenedresourceSchema = new mongoose.Schema({
         timestamps: true
     }
 );
+recommenedresourceSchema.statics = {
+    create(data) {
+        
+    }
+}
 module.exports = mongoose.model('Recommenedresource', recommenedresourceSchema);

@@ -66,3 +66,27 @@ DevOps tools Resources:
 12. Zoom
 13. GCP
 14. Azure
+
+ROUTES
+
+SIGNUP
+POST-> "/api/signup"
+
+LOGIN
+POST-> "/api/login"
+
+AUTH MIDDLEWARE--
+
+HOMEPAGE
+GET-> "api/homepage"
+
+RESOURCES
+GET-> "api/resources/"
+
+REVIEW
+GET-> "api/review/:resourceId"
+POST-> "api/review/:resourceId"
+PUT-> "api/review/:resourceId/:reviewId"
+DELETE-> "api/review/:resourceId/:reviewId"
+
+UPVOTE/DOWNVOTW
