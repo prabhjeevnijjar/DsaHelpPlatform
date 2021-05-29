@@ -92,5 +92,13 @@ POST-> "api/newresource/"
 PUT-> "api/review/:resourceId/:reviewId"
 DELETE-> "api/review/:resourceId/:reviewId"
 
-[]UPVOTE/downvote
+[DONE]UPVOTE
+[DONE]downvote
+
+[] COMMENTS
+Get comment by review id
+GET-> "api/review/:resourceId"
+POST-> "api/review/:resourceId"
+DELETE-> "api/review/:resourceId/:reviewId"
+
 []STAR RATING

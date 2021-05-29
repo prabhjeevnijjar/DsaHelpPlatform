@@ -1,4 +1,9 @@
-const { createResource, getResource } = require("../services/resource.service");
+const {
+  createResource,
+  getResource,
+  upVote,
+  downVote,
+} = require("../services/resource.service");
 module.exports = {
   async createResource(req, res, next) {
     try {
@@ -40,5 +45,26 @@ module.exports = {
         res.status(400).json({ success: 0, message: "can not fetch data" });
         console.log(err);
       });
+  },
+  async upvote(req, res) {
+    try {
+      resid = req.query.adId;
+      usrid = req.user;
+      console.log(resid, usrid);
+      await upVote(resid, usrid, res);
+    } catch (err) {
+      res.status(404).json({ success: 0, message: "can not fetch data" });
+    }
+  },
+  async downvote(req, res) {
+    try {
+      resid = req.query.adId;
+      usrid = req.user;
+      console.log(resid, usrid);
+      await downVote(resid, usrid, res);
+    } catch (err) {
+      console.log(err);
+      res.status(404).json({ success: 0, message: "can not fetch data" });
+    }
   },
 };

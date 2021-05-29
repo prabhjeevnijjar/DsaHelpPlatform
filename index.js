@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 mongoose.connect(
-  process.env.MONGODB_ADDRESS,
+  process.env.MONGODB_LOCAL_ADDRESS,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     if (err) {

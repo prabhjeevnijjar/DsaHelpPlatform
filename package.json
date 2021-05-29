@@ -4,7 +4,7 @@
   "description": "platform serves for reviews and rating all the dsa helps available on the interne",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",

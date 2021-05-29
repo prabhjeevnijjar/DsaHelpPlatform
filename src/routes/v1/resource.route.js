@@ -3,6 +3,8 @@ const { authenticateToken } = require("../../middlewares/authentication/auth");
 const {
   createResource,
   getResources,
+  upvote,
+  downvote,
 } = require("../../controllers/resource.controller");
 router.get("/resource", getResources);
 router.post("/resource", authenticateToken, createResource);
@@ -22,4 +24,7 @@ DATA:
 //upvote
 //downvote
 //review
+router.put("/up-vote", authenticateToken, upvote);
+router.put("/down-vote", authenticateToken, downvote);
+
 module.exports = router;

@@ -46,13 +46,13 @@ const resourceSchema = new mongoose.Schema(
     },
     upvotedBy: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
       },
     ],
     downvotedBy: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
       },
     ],
@@ -63,7 +63,7 @@ const resourceSchema = new mongoose.Schema(
         },
         givenby: {
           type: String,
-          ref: "User",
+          ref: "Users",
         },
         // unique: true
       },
