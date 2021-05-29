@@ -79,26 +79,25 @@ POST-> "/api/login"
 
 [DONE]AUTH MIDDLEWARE--
 
-[]HOMEPAGE
+[]HOMEPAGE / FEED / FILTERS
 GET-> "api/homepage"
 
 [DONE]RECOMMEND RESOURCE
-GET-> "api/newresource/"
-POST-> "api/newresource/" 
+[DONE]GET-> "api/newresource/"
+[DONE]POST-> "api/newresource/" 
 
-[]RESOURCES
+[DONE]RESOURCES
 [DONE]GET-> "api/review/:resourceId"
 [DONE]POST-> "api/review/:resourceId"
-PUT-> "api/review/:resourceId/:reviewId"
-DELETE-> "api/review/:resourceId/:reviewId"
+[TODO]PUT-> "api/review/:resourceId/:reviewId"
+[TODO]DELETE-> "api/review/:resourceId/:reviewId"
 
-[DONE]UPVOTE
-[DONE]downvote
+[DONE]UPVOTE RESOURCE
+[DONE]downvote RESOURCE
 
-[] COMMENTS
-Get comment by review id
-GET-> "api/review/:resourceId"
-POST-> "api/review/:resourceId"
-DELETE-> "api/review/:resourceId/:reviewId"
+[DONE] COMMENTS
+[DONE]GET-> "api/review/:resourceId"
+[DONE]POST-> "api/review/:resourceId"
+[TODO]DELETE-> "api/review/:resourceId/:reviewId"
 
-[]STAR RATING
+[TODO]STAR RATING

@@ -56,18 +56,18 @@ const resourceSchema = new mongoose.Schema(
         ref: "Users",
       },
     ],
-    reviews: [
-      {
-        text: {
-          type: String,
-        },
-        givenby: {
-          type: String,
-          ref: "Users",
-        },
-        // unique: true
-      },
-    ],
+    // reviews: [
+    //   {
+    //     text: {
+    //       type: String,
+    //     },
+    //     givenby: {
+    //       type: String,
+    //       ref: "Users",
+    //     },
+    //     // unique: true
+    //   },
+    // ],
     upvotecount: {
       type: Number,
       default: 0,
@@ -76,17 +76,17 @@ const resourceSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    lastedited: [
-      {
-        editeddate: {
-          type: Number,
-          default: Date.now(),
-        },
-        editedcomment: {
-          type: String,
-        },
-      },
-    ],
+    // lastedited: [
+    //   {
+    //     editeddate: {
+    //       type: Number,
+    //       default: Date.now(),
+    //     },
+    //     editedcomment: {
+    //       type: String,
+    //     },
+    //   },
+    // ],
     status: {
       type: String,
       enum: RESOURCE_STATUS, //"published", "unpublished","deleted",

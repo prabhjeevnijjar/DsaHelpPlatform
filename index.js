@@ -8,6 +8,7 @@ const cors = require("cors");
 const authh = require("./src/routes/v1/auth.route");
 const recommend = require("./src/routes/v1/recommendedres.route");
 const resource = require("./src/routes/v1/resource.route");
+const comment = require("./src/routes/v1/comment.route");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -26,7 +27,7 @@ mongoose.connect(
 app.use("/api", authh);
 app.use("/homepage", recommend);
 app.use("/homepage", resource);
-
+app.use("/homepage", comment);
 app.listen(process.env.SERVER_PORT, () => {
   console.log("connected to port: ", process.env.SERVER_PORT);
 });
