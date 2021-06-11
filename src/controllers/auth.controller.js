@@ -20,34 +20,37 @@ async function createNewUser(body, res) {
     lastname: lname,
     email: email,
     password: hashedPassword,
-  };
+  };  
   await createUser(userBody, res);
 
   // res.status(201).send(user);
 }
 async function signin(req, res) {
+  console.log(req.body.email,req.body.password)
   const emailExist = await User.findOne({ email: req.body.email });
 
   if (!emailExist) {
     console.log("yo");
     res.status(404).json({ message: "email does not exist" });
-  }
-  const checkpassword = await bcrypt.compare(
-    req.body.password,
-    emailExist.password
-  );
-  if (!checkpassword) {
-    res.status(404).json({ message: "wrong password" });
-  }
-  try {
-    const token = await jwt.sign({ _id: emailExist.id }, "process.env.SECRET");
-    console.log(token);
-    res
-      .status(200)
-      .cookie("jwt", token, { httpOnly: true, secure: true, maxAge: 3600000 });
-  } catch (error) {
-    res.status(400).send(error);
-  }
+  } else {
+    const checkpassword = await bcrypt.compare(
+      req.body.password,
+      emailExist.password
+    );
+    if (!checkpassword) {
+      res.status(404).json({ message: "wrong password" });
+    } else {
+      try {
+        const token = await jwt.sign({ _id: emailExist.id }, "process.env.SECRET");
+        console.log(token);
+        res
+          .status(200)
+          .cookie("jwt", token, { httpOnly: true, secure: true, maxAge: 3600000 });
+      } catch (error) {
+        res.status(400).send(error);
+      }
+    }
+}
 }
 
 async function logout(req, res) {
