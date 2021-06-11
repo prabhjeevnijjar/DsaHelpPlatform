@@ -11,6 +11,7 @@ async function createNewUser(body, res) {
   let password = body.Password;
   let Cpassword = body.PasswordConfirmation;
   //hashing the password
+  console.log(body.FirstName,body.LastName,body.Email,body.Password)
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 

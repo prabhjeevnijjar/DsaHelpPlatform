@@ -11,11 +11,12 @@ const RESOURCE_SUB_TYPE = [
   "BinarySearchTrees",
   "Strings",
   "Backtracking",
-  "BinarySearch",
+  "BinarySearch", 
   "DynamicProgramming",
   "Heaps",
   "Graphs",
   "Tries",
+  "java"
 ];
 const RESOURCE_STUDY_TYPE = ["Text", "Video", "Course", "ChatGroup"];
 const RESOURCE_STATUS = ["Published", "Unpublished", "Deleted"];

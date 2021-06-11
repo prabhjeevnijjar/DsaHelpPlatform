@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use("/api", authh);
+app.use("/api", authh); 
 app.use("/homepage", recommend);
 app.use("/homepage", resource);
 app.use("/homepage", comment);
