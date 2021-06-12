@@ -12,7 +12,7 @@ const comment = require("./src/routes/v1/comment.route");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors());
 mongoose.connect(
   process.env.MONGODB_LOCAL_ADDRESS,
   { useNewUrlParser: true, useUnifiedTopology: true },

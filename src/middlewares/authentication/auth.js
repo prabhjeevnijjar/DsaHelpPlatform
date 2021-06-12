@@ -12,7 +12,7 @@ async function authenticateToken(req, res, next) {
   //     req.user = user;
   //     next();
   // });
-  req.user = "60b062beb3bcbb267cef8451";
+  req.user = "60c394c7bb2e824481c798b2";
   next();
 }
 //TODO: make admin auth
