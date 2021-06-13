@@ -64,6 +64,10 @@ const resourceSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    commentcount: {
+      type: Number,
+      default: 0
+    },
     status: {
       type: String,
       enum: RESOURCE_STATUS, //"published", "unpublished","deleted",

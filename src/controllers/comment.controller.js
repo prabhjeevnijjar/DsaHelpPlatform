@@ -1,33 +1,43 @@
 const {
   createComment,
   getCommentByResId,
+  updateCommentCount
 } = require("../services/comment.service");
 module.exports = {
   async postComment(req, res, next) {
-    try {
-      if (!req.query.resourceId || !req.user)
+    if (!req.query.resourceId || !req.user || !req.body.commentText)
         res
           .status(404)
-          .json({ success: 0, message: "resource id or user id not found" });
-      let data = {
-        userId: req.user,
-        resourceId: req.query.resourceId,
-        commentText: req.body.commentText,
-      };
-      console.log(data);
-      await createComment(data, res)
-        .then()
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-      res.status(404).json({ message: error });
-      next(error);
+          .json({ success: 0, message: "resource id or user id or comment body not found" });
+    else {
+      try {
+        let data = {
+          userId: req.user,
+          resourceId: req.query.resourceId,
+          commentText: req.body.commentText,
+        };
+        console.log(data);
+        await createComment(data, res)
+          .then(
+            await updateCommentCount(req.query.resourceId,res)
+              .then()
+              .catch((err)=>{
+                console.log(err);
+              })
+          )
+          .catch((err) => {
+            console.log(err);
+          });
+
+      } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error });
+        next(error);
+      }
     }
   },
   async getComment(req, res) {
-    let resId = await req.query.resId;
+    let resId = await req.query.resourceId;
 
     await getCommentByResId(resId, res)
       .then((fetchedData) => {
