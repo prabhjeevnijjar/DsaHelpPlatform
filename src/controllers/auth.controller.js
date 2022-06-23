@@ -11,7 +11,7 @@ async function createNewUser(body, res) {
   let password = body.Password;
   let Cpassword = body.PasswordConfirmation;
   //hashing the password
-  console.log(body.FirstName,body.LastName,body.Email,body.Password)
+  console.log(body.FirstName, body.LastName, body.Email, body.Password);
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -20,19 +20,21 @@ async function createNewUser(body, res) {
     lastname: lname,
     email: email,
     password: hashedPassword,
-  };  
+  };
   await createUser(userBody, res);
 
   // res.status(201).send(user);
 }
 async function signin(req, res) {
-  console.log(req.body.email,req.body.password)
+  console.log(req.body.email, req.body.password);
   const emailExist = await User.findOne({ email: req.body.email });
 
   if (!emailExist) {
     console.log("yo");
     res.status(404).json({ message: "email does not exist" });
   } else {
+    console.log("email found");
+
     const checkpassword = await bcrypt.compare(
       req.body.password,
       emailExist.password
@@ -40,17 +42,22 @@ async function signin(req, res) {
     if (!checkpassword) {
       res.status(404).json({ message: "wrong password" });
     } else {
+      console.log("password correct");
+
       try {
-        const token = await jwt.sign({ _id: emailExist.id }, "process.env.SECRET");
+        const token = await jwt.sign(
+          { _id: emailExist.id },
+          "process.env.SECRET"
+        );
         console.log(token);
         res
           .status(200)
-          .cookie("jwt", token, { httpOnly: true, secure: true, maxAge: 3600000 });
+          .json({ success: 1, message: "Login Success", token: token });
       } catch (error) {
         res.status(400).send(error);
       }
     }
-}
+  }
 }
 
 async function logout(req, res) {

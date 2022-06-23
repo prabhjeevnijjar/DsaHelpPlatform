@@ -1,9 +1,12 @@
 const RecRes = require("../database/model/recommendedresource.model");
-async function createRecRes(data, res) {
-  const newResource = await new RecRes(data);
-  await newResource.save().then((newData) => {
-    res.status(201).json({ success: 1, message: "Created" });
-  });
+async function createRecRes(data) {
+  try {
+    const newResource = await new RecRes(data);
+    await newResource.save();
+    return newResource;
+  } catch (err) {
+    return err;
+  }
 }
 async function getRecRes(res) {
   return await RecRes.find(
