@@ -5,6 +5,7 @@ const {
 } = require("../services/comment.service");
 module.exports = {
   async postComment(req, res, next) {
+    console.log(req.query.resourceId,req.user,req.body.commentText)
     if (!req.query.resourceId || !req.user || !req.body.commentText)
         res
           .status(404)

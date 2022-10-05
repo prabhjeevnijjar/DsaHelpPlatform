@@ -11,7 +11,7 @@ async function createNewUser(body, res) {
   let password = body.Password;
   let Cpassword = body.PasswordConfirmation;
   //hashing the password
-  console.log(body.FirstName,body.LastName,body.Email,body.Password)
+  console.log(body.FirstName, body.LastName, body.Email, body.Password);
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -20,37 +20,57 @@ async function createNewUser(body, res) {
     lastname: lname,
     email: email,
     password: hashedPassword,
-  };  
+  };
   await createUser(userBody, res);
 
   // res.status(201).send(user);
 }
 async function signin(req, res) {
-  console.log(req.body.email,req.body.password)
+  console.log(req.body.email, req.body.password);
   const emailExist = await User.findOne({ email: req.body.email });
 
   if (!emailExist) {
     console.log("yo");
-    res.status(404).json({ message: "email does not exist" });
+    res.status(404).json({
+      success: false,
+      isLogin: false,
+      message: "email does not exist",
+    });
   } else {
     const checkpassword = await bcrypt.compare(
       req.body.password,
       emailExist.password
     );
     if (!checkpassword) {
-      res.status(404).json({ message: "wrong password" });
+      res.status(404).json({
+        success: false,
+        isLogin: false,
+        message: "wrong password",
+      });
     } else {
       try {
-        const token = await jwt.sign({ _id: emailExist.id }, "process.env.SECRET");
+        const token = await jwt.sign(
+          { _id: emailExist.id },
+          "process.env.SECRET"
+        );
         console.log(token);
-        res
-          .status(200)
-          .cookie("jwt", token, { httpOnly: true, secure: true, maxAge: 3600000 });
+        res.status(200).json({
+          code: 200,
+          token: token,
+          success: true,
+          isLogin: true,
+          message: "Login Success",
+        });
       } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({
+          code: 400,
+          success: false,
+          isLogin: false,
+          message: "Something went wrong",
+        });
       }
     }
-}
+  }
 }
 
 async function logout(req, res) {
@@ -70,8 +90,33 @@ async function getCurrentUser(req, res) {
   }
 }
 
+async function checkEmailExists(req, res) {
+  if (req.body.email) {
+    console.log(req.body.email);
+    const emailExist = await User.findOne({ email: req.body.email });
+    console.log({ emailExist });
+    if (!emailExist) {
+      console.log("No email found");
+      res.status(404).json({
+        code: 404,
+        success: false,
+        message: "Email does not exist",
+        status: false,
+      });
+    } else {
+      res.status(200).json({
+        code: 200,
+        success: true,
+        message: "Email found",
+        status: true,
+      });
+    }
+  }
+}
+
 module.exports = {
   createNewUser,
   signin,
   logout,
+  checkEmailExists,
 };

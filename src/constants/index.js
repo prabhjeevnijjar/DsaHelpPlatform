@@ -16,7 +16,8 @@ const RESOURCE_SUB_TYPE = [
   "Heaps",
   "Graphs",
   "Tries",
-  "java"
+  "java",
+  "aws"
 ];
 const RESOURCE_STUDY_TYPE = ["Text", "Video", "Course", "ChatGroup"];
 const RESOURCE_STATUS = ["Published", "Unpublished", "Deleted"];

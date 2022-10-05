@@ -18,7 +18,7 @@ module.exports = {
         postedDate: req.body.postedDate,
         status: req.body.status,
       };
-      console.log(data);
+      console.log("data:",data);
       await createResource(data, res)
         .then()
         .catch((err) => {
