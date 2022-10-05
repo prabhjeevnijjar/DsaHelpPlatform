@@ -37,6 +37,8 @@ async function signin(req, res) {
       message: "email does not exist",
     });
   } else {
+    console.log("email found");
+
     const checkpassword = await bcrypt.compare(
       req.body.password,
       emailExist.password
@@ -48,19 +50,17 @@ async function signin(req, res) {
         message: "wrong password",
       });
     } else {
+      console.log("password correct");
+
       try {
         const token = await jwt.sign(
           { _id: emailExist.id },
           "process.env.SECRET"
         );
         console.log(token);
-        res.status(200).json({
-          code: 200,
-          token: token,
-          success: true,
-          isLogin: true,
-          message: "Login Success",
-        });
+        res
+          .status(200)
+          .json({ success: 1, message: "Login Success", token: token });
       } catch (error) {
         res.status(400).json({
           code: 400,

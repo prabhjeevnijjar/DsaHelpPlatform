@@ -101,3 +101,20 @@ GET-> "api/homepage"
 [TODO]DELETE-> "api/review/:resourceId/:reviewId"
 
 [TODO]STAR RATING
+
+
+RECOMMENDATION
+
+User should have all access to his content
+
+Need more information on Data such as:
+
+discription
+video watch time
+content by 
+resource from 
+resource publish time 
+click count
+article sub type (text, code)
+
+
