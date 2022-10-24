@@ -10,10 +10,18 @@ async function createUser(userBody, res) {
       .save()
       .then((usr) => {
         console.log(usr);
-        res.status(201).json({ message: "You have Successfuly Registerd" });
+        res.status(200).json({
+          code: 200,
+          success: true,
+          message: "Sign Up Success",
+        });
       })
       .catch((err) => {
-        res.status(400).json({ errorR: err });
+        res.status(400).json({
+          code: 400,
+          success: false,
+          message: "Sign Up Failed",
+        });
       });
   }
 }

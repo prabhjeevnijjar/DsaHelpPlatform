@@ -1,18 +1,19 @@
 const express = require("express");
-// var path = require('path');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
 const authh = require("./src/routes/v1/auth.route");
 const recommend = require("./src/routes/v1/recommendedres.route");
 const resource = require("./src/routes/v1/resource.route");
 const comment = require("./src/routes/v1/comment.route");
+
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+
 mongoose.connect(
   process.env.MONGODB_LOCAL_ADDRESS,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -24,6 +25,7 @@ mongoose.connect(
     }
   }
 );
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -32,10 +34,12 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use("/api", authh); 
+
+app.use("/api", authh);
 app.use("/homepage", recommend);
 app.use("/homepage", resource);
 app.use("/homepage", comment);
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log("connected to port: ", process.env.SERVER_PORT);
 });

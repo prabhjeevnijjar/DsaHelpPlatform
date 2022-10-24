@@ -18,7 +18,7 @@ module.exports = {
         postedDate: req.body.postedDate,
         status: req.body.status,
       };
-      console.log("data:",data);
+      console.log("data:", data);
       await createResource(data, res)
         .then()
         .catch((err) => {
@@ -34,15 +34,30 @@ module.exports = {
     await getResource(res)
       .then((fetchedData) => {
         if (fetchedData) {
-          res.status(200).json({ success: 1, data: fetchedData });
+          res.status(200).json({
+            code: 200,
+            success: true,
+            message: "Data fetched successfully !",
+            data: { data: fetchedData },
+            status: true,
+          });
         } else {
-          res
-            .status(404)
-            .json({ success: 0, message: "No data found", fetchedData });
+          res.status(404).json({
+            code: 404,
+            success: false,
+            message: "No data found",
+            data: { data: [] },
+            status: false,
+          });
         }
       })
       .catch((err) => {
-        res.status(400).json({ success: 0, message: "can not fetch data" });
+        res.status(404).json({
+          code: 404,
+          success: false,
+          message: "Something went wrong",
+          status: false,
+        });
         console.log(err);
       });
   },

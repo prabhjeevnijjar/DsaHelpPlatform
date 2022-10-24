@@ -7,11 +7,14 @@ async function createResource(data, res) {
 }
 
 async function getResource(res) {
-  return await Resource.find({});
+  return await Resource.findAll({});
 }
 
 async function upVote(resid, usrid, res) {
-  if(!resid || !userid) res.status(404).json({ success: 0, message: "Can not find resourceid or userid" });
+  if (!resid || !userid)
+    res
+      .status(404)
+      .json({ success: 0, message: "Can not find resourceid or userid" });
   else {
     const found = await Resource.find({
       $and: [{ _id: resid }, { upvotedBy: usrid }],
@@ -33,7 +36,9 @@ async function upVote(resid, usrid, res) {
         })
         .catch((err) => {
           console.log(err);
-          res.status(404).json({ success: 0, message: "Can not find resource" });
+          res
+            .status(404)
+            .json({ success: 0, message: "Can not find resource" });
         });
     } else {
       res.status(409).json({ success: 0, message: "You can upvote only once" });
@@ -42,12 +47,15 @@ async function upVote(resid, usrid, res) {
 }
 
 async function downVote(resid, usrid, res) {
-  if(!resid || !usrid) res.status(404).json({ success: 0, message: "Can not find resourceid or userid" });
-    else {
+  if (!resid || !usrid)
+    res
+      .status(404)
+      .json({ success: 0, message: "Can not find resourceid or userid" });
+  else {
     const found = await Resource.find({
       $and: [{ _id: resid }, { downvotedBy: usrid }],
     });
-    console.log("found dataa",found.length);
+    console.log("found dataa", found.length);
     if (found.length === 0) {
       await Resource.findOneAndUpdate(
         {
@@ -65,10 +73,14 @@ async function downVote(resid, usrid, res) {
         })
         .catch((err) => {
           console.log(err);
-          res.status(404).json({ success: 0, message: "Can not find resource" });
+          res
+            .status(404)
+            .json({ success: 0, message: "Can not find resource" });
         });
     } else {
-      res.status(409).json({ success: 0, message: "You can downvote only once" });
+      res
+        .status(409)
+        .json({ success: 0, message: "You can downvote only once" });
     }
   }
 }
