@@ -1,4 +1,10 @@
-const RESOURCE_TYPE = ["dsa", "programming_language", "devops", "cloud"];
+const RESOURCE_TYPE = [
+  "dsa",
+  "programming_language",
+  "devops",
+  "cloud",
+  "system design",
+];
 const RESOURCE_SUB_TYPE = [
   "arrays",
   "Greedy",
@@ -11,15 +17,16 @@ const RESOURCE_SUB_TYPE = [
   "BinarySearchTrees",
   "Strings",
   "Backtracking",
-  "BinarySearch", 
+  "BinarySearch",
   "DynamicProgramming",
   "Heaps",
   "Graphs",
   "Tries",
   "java",
-  "aws"
+  "aws",
+  "system design",
 ];
-const RESOURCE_STUDY_TYPE = ["Text", "Video", "Course", "ChatGroup"];
+const RESOURCE_STUDY_TYPE = ["Text", "Video", "Course", "ChatGroup", "Youtube"];
 const RESOURCE_STATUS = ["Published", "Unpublished", "Deleted"];
 module.exports = {
   RESOURCE_TYPE,

@@ -1,13 +1,19 @@
 const Resource = require("../database/model/resource.model");
+
 async function createResource(data, res) {
-  const newResource = await new Resource(data);
-  await newResource.save().then((newData) => {
-    res.status(201).json({ success: 1, message: "Created new resource" });
+  await new Resource(data).save().then((newData) => {
+    res.status(201).json({
+      code: 201,
+      status: true,
+      success: true,
+      message: "Created new resource",
+      data: { data: newData },
+    });
   });
 }
 
 async function getResource(res) {
-  return await Resource.findAll({});
+  return await Resource.find();
 }
 
 async function upVote(resid, usrid, res) {
@@ -84,6 +90,7 @@ async function downVote(resid, usrid, res) {
     }
   }
 }
+
 module.exports = {
   createResource,
   getResource,

@@ -2,6 +2,7 @@ const {
   createRecRes,
   getRecRes,
 } = require("../services/recommendedres.service");
+
 module.exports = {
   async createResource(req, res, next) {
     let data = {
@@ -14,16 +15,16 @@ module.exports = {
         res
           .status(200)
           .json({ success: 1, message: "Resource Created", data: data });
-          return
+        return;
       })
       .catch((err) => {
         res
           .status(400)
           .json({ success: 1, message: "Could not create resource", err: err });
-          return
+        return;
       });
-    // return
   },
+
   async getAllResources(req, res) {
     await getRecRes(res)
       .then((fetchedData) => {
@@ -37,7 +38,6 @@ module.exports = {
       })
       .catch((err) => {
         res.status(400).json({ success: 0, message: "can not fetch data" });
-        console.log(err);
       });
   },
 };

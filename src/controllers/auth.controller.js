@@ -111,16 +111,13 @@ async function checkEmailExists(req, res) {
     }
   }
 }
+
 async function checkTokenIsValid(req, res) {
-  console.log("in the function", req.headers.authorization.split(" ")[1]);
   if (req.headers.authorization && req.headers.authorization.split(" ")[1]) {
-    console.log("----", req.headers.authorization.split(" ")[1]);
     const decodedEmail = jwtDecode(
       req.headers.authorization.split(" ")[1]
     ).email;
-    console.log({ decodedEmail });
     const emailExist = await User.findOne({ email: decodedEmail });
-    console.log({ emailExist });
     if (!emailExist) {
       res.status(404).json({
         code: 404,

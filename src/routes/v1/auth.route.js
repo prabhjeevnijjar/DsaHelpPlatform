@@ -18,10 +18,6 @@ router.post("/check-email", (req, res) => {
   checkEmailExists(req, res);
 });
 
-// router.get("/check-token"), (req, res) => res.status(200).send("wassup");
-// console.log("request received on this api");
-// checkTokenIsValid(req, res);
-
 router.post("/login", (req, res) => {
   signin(req, res);
 });

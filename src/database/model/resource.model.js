@@ -5,39 +5,43 @@ const {
   RESOURCE_STUDY_TYPE,
   RESOURCE_STATUS,
 } = require("../../constants/index");
+
 const resourceSchema = new mongoose.Schema(
   {
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
     },
-    name: {
-      //resource name
+    title: {
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
+    resourcelink: {
+      type: String,
+    },
     resourcetype: {
-      type: String, //dsa,programming language, devops, CI/CD
+      type: String,
       enum: RESOURCE_TYPE,
     },
     resourcesubtype: [
       {
         type: String,
-        enum: RESOURCE_SUB_TYPE, //arrays, strings, AWS, Azure, Jenkins
+        enum: RESOURCE_SUB_TYPE,
       },
     ],
-    resourcelink: {
-      type: String, //URL
-    },
     resourceauthor: [
       {
-        type: String, //publisher name(s)
+        type: String,
       },
     ],
     resourcestudytype: [
       {
         type: String,
-        enum: RESOURCE_STUDY_TYPE, //text based, video based, full course(udemy/pluralsight coursera), whatsapp/telegram group
+        enum: RESOURCE_STUDY_TYPE,
       },
     ],
     postedDate: {
@@ -66,7 +70,7 @@ const resourceSchema = new mongoose.Schema(
     },
     commentcount: {
       type: Number,
-      default: 0
+      default: 0,
     },
     status: {
       type: String,
