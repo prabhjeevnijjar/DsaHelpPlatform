@@ -60,6 +60,12 @@ const resourceSchema = new mongoose.Schema(
         ref: "Users",
       },
     ],
+    bookmarkedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users",
+      },
+    ],
     upvotecount: {
       type: Number,
       default: 0,

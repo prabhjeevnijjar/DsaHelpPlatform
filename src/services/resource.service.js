@@ -16,6 +16,72 @@ async function getResource(res) {
   return await Resource.find();
 }
 
+async function bookmarkRes(resid, usrid, res) {
+  if (!resid || !usrid)
+    res.status(404).json({
+      code: 404,
+      status: false,
+      success: false,
+      message: "Unauthorized access",
+    });
+  else {
+    const found = await Resource.find({
+      $and: [{ _id: resid }, { bookmarkedBy: usrid }],
+    });
+    console.log({ found });
+    if (found.length === 0) {
+      await Resource.findOneAndUpdate(
+        {
+          _id: resid,
+        },
+        {
+          $push: { bookmarkedBy: usrid },
+        }
+      )
+        .then((dat) => {
+          res.status(201).json({
+            code: 201,
+            status: true,
+            success: true,
+            message: "Added to bookmarks",
+          });
+        })
+        .catch((err) => {
+          res.status(404).json({
+            code: 404,
+            status: false,
+            success: false,
+            message: "Resource id not found",
+          });
+        });
+    } else {
+      //  remove bookmark if resource is already bookmarked by the user
+      await Resource.findOneAndUpdate(
+        {
+          _id: resid,
+        },
+        { $pull: { bookmarkedBy: usrid } }
+      )
+        .then((dat) => {
+          res.status(201).json({
+            code: 201,
+            status: true,
+            success: true,
+            message: "Removed from bookmarks",
+          });
+        })
+        .catch((err) => {
+          res.status(404).json({
+            code: 404,
+            status: false,
+            success: false,
+            message: "Resource id not found",
+          });
+        });
+    }
+  }
+}
+
 async function upVote(resid, usrid, res) {
   if (!resid || !userid)
     res
@@ -96,4 +162,5 @@ module.exports = {
   getResource,
   upVote,
   downVote,
+  bookmarkRes,
 };

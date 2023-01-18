@@ -3,6 +3,7 @@ const {
   getResource,
   upVote,
   downVote,
+  bookmarkRes,
 } = require("../services/resource.service");
 
 module.exports = {
@@ -57,6 +58,23 @@ module.exports = {
           status: false,
         });
       });
+  },
+
+  async bookmarkResource(req, res) {
+    try {
+      resid = req.query.resid;
+      usrid = req.user;
+      console.log({ usrid }, { resid });
+      await bookmarkRes(resid, usrid, res);
+    } catch (err) {
+      console.log({ err });
+      res.status(404).json({
+        code: 404,
+        success: false,
+        message: "Something went wrong",
+        status: false,
+      });
+    }
   },
 
   async upvote(req, res) {
