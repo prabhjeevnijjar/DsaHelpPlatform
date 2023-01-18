@@ -15,7 +15,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose.connect(
-  process.env.MONGODB_LOCAL_ADDRESS,
+  process.env.MONGODB_LOCAL_ADDRESS ||
+    "mongodb+srv://prabhjeev:admin@testingcluster0.0fpxp.mongodb.net/?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     if (err) {
@@ -40,6 +41,6 @@ app.use("/homepage", recommend);
 app.use("/homepage", resource);
 app.use("/homepage", comment);
 
-app.listen(process.env.SERVER_PORT, () => {
+app.listen(process.env.SERVER_PORT || 3001, () => {
   console.log("connected to port: ", process.env.SERVER_PORT);
 });
