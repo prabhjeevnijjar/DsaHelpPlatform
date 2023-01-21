@@ -128,7 +128,7 @@ async function checkTokenIsValid(req, res) {
     } else {
       try {
         const token = await jwt.sign(
-          { first_name: emailExist.firstname, email: emailExist.email },
+          { first_name: emailExist.firstname, email: emailExist.email, userId: emailExist.id },
           "process.env.SECRET"
         );
         res.status(200).json({
