@@ -1,4 +1,5 @@
 const RecRes = require("../database/model/recommendedresource.model");
+
 async function createRecRes(data) {
   try {
     const newResource = await new RecRes(data);
@@ -8,6 +9,7 @@ async function createRecRes(data) {
     return err;
   }
 }
+
 async function getRecRes(res) {
   return await RecRes.find(
     {}
@@ -19,6 +21,7 @@ async function getRecRes(res) {
     //   }
   );
 }
+
 module.exports = {
   createRecRes,
   getRecRes,

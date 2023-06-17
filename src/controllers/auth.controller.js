@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const { default: jwtDecode } = require("jwt-decode");
 
 async function createNewUser(body, res) {
-  // let body = req.body;
   let fname = body.FirstName;
   let lname = body.LastName;
   let email = body.Email;
@@ -76,9 +75,7 @@ async function signin(req, res) {
 
 async function logout(req, res) {
   cookie = await req.cookies;
-
   res.cookie("jwt", "", { expires: new Date(0) });
-
   res.redirect("/signin");
 }
 

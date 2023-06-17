@@ -19,11 +19,8 @@ mongoose.connect(
     "mongodb+srv://prabhjeev:admin@testingcluster0.0fpxp.mongodb.net/?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Connection to MongoDb successful");
-    }
+    if (err) console.log(err);
+    else console.log("Connection to MongoDb successful");
   }
 );
 
