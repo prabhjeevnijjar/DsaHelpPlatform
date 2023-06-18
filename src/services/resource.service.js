@@ -1,4 +1,6 @@
 const Resource = require("../database/model/resource.model");
+const Bookmark = require("../database/model/bookmark.model")
+var ObjectId = require('mongodb').ObjectId; 
 
 async function createResource(data, res) {
   await new Resource(data).save().then((newData) => {
@@ -12,8 +14,36 @@ async function createResource(data, res) {
   });
 }
 
-async function getResource(res) {
-  return await Resource.find();
+async function getResource(userId) {
+  if(userId) {
+    // all likes, dislikes, comments, bookmarks by this user and throw into feed
+  } else {
+    return await Resource.find();
+  }
+}
+
+async function getBookmarkById(resid, res) {
+  console.log({resid})
+   await Bookmark.find({ "userId": new ObjectId(resid) })
+   .then((dat) => {
+    console.log("======",dat)
+    res.status(200).json({
+      code: 200,
+      success: true,
+      message: dat?.length ? "Bookmark Data fetched successfully !" : "No data available",
+      data: dat,
+      status: true,
+    });
+  })
+  .catch((err)=>{
+    res.status(404).json({
+      code: 404,
+      success: false,
+      message: "Bookmark Data not fetched !",
+      data: err,
+      status: false,
+    });
+  })
 }
 
 async function bookmarkRes(resid, usrid, res) {
@@ -25,26 +55,46 @@ async function bookmarkRes(resid, usrid, res) {
       message: "Unauthorized access",
     });
   else {
-    const found = await Resource.find({
-      $and: [{ _id: resid }, { bookmarkedBy: usrid }],
-    });
-    console.log({ found });
-    if (found.length === 0) {
-      await Resource.findOneAndUpdate( { _id: resid, }, { $push: { bookmarkedBy: usrid }, } )
-        .then((dat) => {
-          res.status(201).json({
-            code: 201,
-            status: true,
-            success: true,
-            message: "Added to bookmarks",
-          });
-        })
-        .catch((err) => res.status(404).json({ code: 404, status: false, success: false, message: "Resource id not found", }) );
-    } else {
-      //  remove bookmark if resource is already bookmarked by the user
-      await Resource.findOneAndUpdate( { _id: resid, }, { $pull: { bookmarkedBy: usrid } } )
-        .then((dat) => res.status(201).json({ code: 201, status: true, success: true, message: "Removed from bookmarks", }))
-        .catch((err) => res.status(404).json({ code: 404, status: false, success: false, message: "Resource id not found", }) );
+    const found = await Resource.find({ _id: resid });
+
+    if(found?.length) {
+      // find bookmark by res id and user id
+      // if exist then set isBookmark: false
+      const bookmarkFound = await Bookmark.find({
+        $and: [{ resourceId: resid }, { userId: usrid }],
+      });
+
+    if(!bookmarkFound?.length) { // bookmark not found then create on
+      const data = {
+        resourceId: resid,
+        userId: usrid,
+        resourceData: found,
+        isBookmarked: true
+      }
+
+      await new Bookmark(data).save().then((newData) => {
+        res.status(201).json({
+          code: 201,
+          status: true,
+          success: true,
+          message: "Created new bookmark",
+          data: { newData },
+        });
+      });
+    } else { // else update status to false
+      Bookmark.findOneAndDelete({ $and: [{ resourceId: resid }, { userId: usrid }] })
+      .then((dat)=>{
+        res.status(201).json({
+          code: 201,
+          status: true,
+          success: true,
+          message: "Deleted bookmark",
+        });
+      })
+      .catch((err)=>{
+        res.status(404).json({ code: 404, status: false, success: false, message: "Bookmark not found", })
+      })
+    }
     }
   }
 }
@@ -106,4 +156,5 @@ module.exports = {
   upVote,
   downVote,
   bookmarkRes,
+  getBookmarkById
 };

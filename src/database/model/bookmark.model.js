@@ -1,4 +1,3 @@
-const { boolean } = require("joi");
 const mongoose = require("mongoose");
 
 const bookmarkSchema = new mongoose.Schema(
@@ -13,9 +12,12 @@ const bookmarkSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
-    isBookmarked: {
-      type: boolean,
+    resourceData: {
+      type: Object,
       required: true,
+    },
+    isBookmarked: {
+      type: Boolean,
     },
   },
   {

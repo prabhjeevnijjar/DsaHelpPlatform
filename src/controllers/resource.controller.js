@@ -4,6 +4,7 @@ const {
   upVote,
   downVote,
   bookmarkRes,
+  getBookmarkById
 } = require("../services/resource.service");
 
 module.exports = {
@@ -30,7 +31,10 @@ module.exports = {
   },
 
   async getResources(req, res) {
-    await getResource(res)
+    console.log("=========",req.user) 
+    // if we receive user id here then we find user likes, dislikes, bookmarks and then send them back as true
+
+    await getResource(req)
       .then((fetchedData) => {
         if (fetchedData) {
           res.status(200).json({
@@ -64,10 +68,9 @@ module.exports = {
     try {
       resid = req.query.resid;
       usrid = req.user;
-      console.log({ usrid }, { resid });
+  
       await bookmarkRes(resid, usrid, res);
     } catch (err) {
-      console.log({ err });
       res.status(404).json({
         code: 404,
         success: false,
@@ -75,6 +78,11 @@ module.exports = {
         status: false,
       });
     }
+  },
+
+  async getBookmarks(req, res) {
+      usrid = req.user;
+      await getBookmarkById(usrid, res)
   },
 
   async upvote(req, res) {
