@@ -17,6 +17,7 @@ async function createResource(data, res) {
 async function getResource(userId) {
   if(userId) {
     // all likes, dislikes, comments, bookmarks by this user and throw into feed
+    return await Resource.find();
   } else {
     return await Resource.find();
   }
