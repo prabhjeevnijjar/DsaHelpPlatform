@@ -1,14 +1,11 @@
 const router = require("express").Router();
+const { userRegistrationValidationRules, validate} = require("../../middlewares/validation/validator");
 const {
   createNewUser,
   signin,
   checkEmailExists,
   checkTokenIsValid,
 } = require("../../controllers/auth.controller");
-let {
-  userRegistrationValidationRules,
-  validate,
-} = require("../../middlewares/validation/validator");
 
 router.post("/register", (req, res) => {
   createNewUser(req.body, res);

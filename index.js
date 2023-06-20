@@ -7,6 +7,7 @@ const authh = require("./src/routes/v1/auth.route");
 const recommend = require("./src/routes/v1/recommendedres.route");
 const resource = require("./src/routes/v1/resource.route");
 const comment = require("./src/routes/v1/comment.route");
+const profile = require("./src/routes/v1/profile.route");
 
 const app = express();
 
@@ -26,10 +27,7 @@ mongoose.connect(
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header( "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
@@ -37,6 +35,7 @@ app.use("/api", authh);
 app.use("/homepage", recommend);
 app.use("/homepage", resource);
 app.use("/homepage", comment);
+app.use("/profile", profile);
 
 app.listen(process.env.SERVER_PORT || 3001, () => {
   console.log("connected to port: ", process.env.SERVER_PORT);
