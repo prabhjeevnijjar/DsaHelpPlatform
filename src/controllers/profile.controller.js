@@ -31,8 +31,7 @@ module.exports = {
     },
     async getMyPosts (req, res, next) {
         try {
-            await getMyPostsData();
-
+            await getMyPostsData(req, res, next);
         } catch(err) {
             responseHandler({
                 statusCode: 404,

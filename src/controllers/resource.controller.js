@@ -34,7 +34,7 @@ module.exports = {
     console.log("=========",req.user) 
     // if we receive user id here then we find user likes, dislikes, bookmarks and then send them back as true
 
-    await getResource(req)
+    await getResource(req.user)
       .then((fetchedData) => {
         if (fetchedData) {
           res.status(200).json({
@@ -55,6 +55,7 @@ module.exports = {
         }
       })
       .catch((err) => {
+        console.log("==7676676767==",err)
         res.status(404).json({
           code: 404,
           success: false,

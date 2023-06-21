@@ -14,19 +14,19 @@ router.post(
 );
 
 router.get(
-    "/profile/my-posts",
+    "/my-posts",
     (req, res, next) => authenticateToken(req, res, next),
     (req, res, next) => getMyPosts(req, res, next)
 );
 
 router.get(
-    "/profile/my-liked",
+    "/my-liked",
     (req, res, next) => authenticateToken(req, res, next),
     (req, res, next) => getMyLiked(req, res, next)
 );
 
 router.get(
-    "/profile/my-commented",
+    "/my-commented",
     (req, res, next) => authenticateToken(req, res, next),
     (req, res, next) => getMyCommented(req, res, next)
 );

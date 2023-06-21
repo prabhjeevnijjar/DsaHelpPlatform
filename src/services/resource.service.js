@@ -1,5 +1,7 @@
 const Resource = require("../database/model/resource.model");
-const Bookmark = require("../database/model/bookmark.model")
+const Bookmark = require("../database/model/bookmark.model");
+const User = require("../database/model/users.model");
+
 var ObjectId = require('mongodb').ObjectId; 
 
 async function createResource(data, res) {
@@ -15,9 +17,34 @@ async function createResource(data, res) {
 }
 
 async function getResource(userId) {
+  console.log({userId})
   if(userId) {
     // all likes, dislikes, comments, bookmarks by this user and throw into feed
-    return await Resource.find();
+    // const data= await Resource.find(
+    //   {
+    //       // postedBy: userId
+    //     // $lookup: {
+    //     //   from: 'Bookmark',
+    //     //   let: {"postedBy": userId}
+    //     // }
+    //   }
+    // );
+    const data= await Resource.aggregate([
+      {
+        // $match: {
+        //   "postedBy": new ObjectId(userId)
+        // }
+        $lookup: {
+          from: 'User',
+          localField: "postedBy",
+          foreignField: "_id",
+          as: "test"
+        }
+      }
+    ]);
+    console.log("=-=-=-=-=-=-",data);
+    return data;
+
   } else {
     return await Resource.find();
   }
