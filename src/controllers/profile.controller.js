@@ -46,7 +46,6 @@ module.exports = {
     async getMyLiked (req, res, next) {
         try {
             await getMyLikedData();
-
         } catch(err) {
             responseHandler({
                 statusCode: 404,
@@ -60,8 +59,7 @@ module.exports = {
     },
     async getMyCommented (req, res, next) {
         try {
-            await getMyCommentedData();
-
+            await getMyCommentedData(req, res, next);
         } catch {
             responseHandler({
                 statusCode: 404,
