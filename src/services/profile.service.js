@@ -39,10 +39,18 @@ module.exports = {
         })
     },
     async getMyPostsData (req, res, next) {
-        console.log("===========",req.user)
-        await Resource.find({ postedBy: req.user })
+        const {user} = req;
+        await Resource.aggregate([
+            { $match : { postedBy : user } },
+            { $project : { postedBy: 1, title : 1, description : 1, resourcelink: 1, resourcelink: 1, resourcetype: 1, resourcesubtype: 1, resourceauthor: 1, resourcestudytype: 1, postedDate: 1, upvotedBy: 1, downvotedBy: 1, bookmarkedBy: 1, upvotecount: 1, downvotecount: 1, commentcount: 1, status: 1 } },
+            { $lookup : {
+              from : 'Bookmark',
+              localField : 'postedBy',
+              foreignField : 'userId',
+              as : 'TEST'
+            } }
+          ])
         .then((data) => {
-            console.log("----",data) 
             if(data?.length) {
                 responseHandler({
                     statusCode: 200,
