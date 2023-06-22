@@ -5,7 +5,12 @@ const {
 } = require("../../controllers/comment.controller");
 const { authenticateToken } = require("../../middlewares/authentication/auth");
 
-router.post("/comment", authenticateToken, postComment);
+router.post(
+  "/comment",
+  authenticateToken,
+  (req, res, next) => postComment(req, res, next)
+);
+
 router.get("/comment", authenticateToken, getComment);
 
 module.exports = router;

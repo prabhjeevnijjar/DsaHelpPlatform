@@ -20,31 +20,18 @@ async function getResource(userId) {
   console.log({userId})
   if(userId) {
     // all likes, dislikes, comments, bookmarks by this user and throw into feed
-    // const data= await Resource.find(
-    //   {
-    //       // postedBy: userId
-    //     // $lookup: {
-    //     //   from: 'Bookmark',
-    //     //   let: {"postedBy": userId}
-    //     // }
-    //   }
-    // );
-    const data= await Resource.aggregate([
-      {
-        // $match: {
-        //   "postedBy": new ObjectId(userId)
-        // }
-        $lookup: {
-          from: 'User',
-          localField: "postedBy",
-          foreignField: "_id",
-          as: "test"
-        }
-      }
+    const data = await Resource.aggregate([
+      { $match : { postedBy : userId } },
+      { $project : { postedBy: 1, title : 1, description : 1, resourcelink: 1, resourcelink: 1, resourcetype: 1, resourcesubtype: 1, resourceauthor: 1, resourcestudytype: 1, postedDate: 1, upvotedBy: 1, downvotedBy: 1, bookmarkedBy: 1, upvotecount: 1, downvotecount: 1, commentcount: 1, status: 1 } },
+      { $lookup : {
+        from : 'Bookmark',
+        localField : 'postedBy',
+        foreignField : 'userId',
+        as : 'TEST'
+      } }
     ]);
     console.log("=-=-=-=-=-=-",data);
     return data;
-
   } else {
     return await Resource.find();
   }

@@ -6,6 +6,6 @@ const resourceSchema = new mongoose.Schema({
         ref: "Resources"
     },
     upvotedB
-}
-)
+})
+
 module.exports = mongoose.model("Resource", resourceSchema);
