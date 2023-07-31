@@ -19,6 +19,10 @@ const bookmarkSchema = new mongoose.Schema(
     isBookmarked: {
       type: Boolean,
     },
+    postedDate: {
+      type: Number,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,

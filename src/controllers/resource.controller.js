@@ -83,6 +83,7 @@ module.exports = {
 
   async getBookmarks(req, res) {
       usrid = req.user;
+      console.log("--------",req)
       await getBookmarkById(usrid, res)
   },
 

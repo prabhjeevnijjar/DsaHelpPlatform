@@ -1,5 +1,5 @@
 
-const {getProfileData, updateMyProfileData, getMyPostsData, getMyLikedData, getMyCommentedData } = require("../services/profile.service");
+const {getProfileData, updateMyProfileData, getMyPostsData, getMyUpvoteData, getMyCommentedData } = require("../services/profile.service");
 const { responseHandler } = require("../helpers/responseHandler");
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
     },
     async updateMyProfile (req, res, next) {
         try {
-            await updateMyProfileData();
+            await updateMyProfileData();      // TODO: Update profile API
         } catch(err) {
             responseHandler({
                 statusCode: 404,
@@ -45,7 +45,7 @@ module.exports = {
     },
     async getMyLiked (req, res, next) {
         try {
-            await getMyLikedData();
+            await getMyUpvoteData(req, res, next);
         } catch(err) {
             responseHandler({
                 statusCode: 404,

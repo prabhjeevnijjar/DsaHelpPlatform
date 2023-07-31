@@ -127,6 +127,51 @@ module.exports = {
             }, req, res, next);
         })
 
-    }
+    },
+    async getMyUpvoteData(req, res, next) {
+        // TODO: call resource data here to send with this.
+        const {user} = req;
+        await Comment.aggregate([
+            { $match : { userId : user } },
+            { $project : { resourceId: 1, commentText : 1, postedDate: 1 } },
+            { $lookup : {
+              from : 'User',
+              localField : 'userId',
+              foreignField : 'userId',
+              as : 'TEST'
+            } }
+          ])
+        .then((data) => {
+            if(data?.length) {
+                responseHandler({
+                    statusCode: 200,
+                    errCode: 200,
+                    errMsg: "User Found",
+                    errStatus: true,
+                    data
+                }, req, res, next);
+            } else {
+                responseHandler({
+                    statusCode: 200,
+                    errCode: 400,
+                    errMsg: "No Comments Found",
+                    errStatus: false,
+                    data
+                }, req, res, next);
+            }
+          
+        })
+        .catch((err) => {
+            console.log({err})
+            responseHandler({
+                statusCode: 404,
+                errCode: 404,
+                errMsg: "User Not Found",
+                errStatus: false,
+                data
+            }, req, res, next);
+        })
+
+    },
 
 }
