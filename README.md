@@ -7,9 +7,9 @@ HOMEPAGE
 1. Implement Elastic Search for searching posts.
 
 PROFILE PAGE
-1. GET /profile
-2. GET /my-posts
+1. GET /profile [DONE]
+2. GET /my-posts [DONE]
 3. GET /my-liked
-4. GET /my-commented
+4. GET /my-commented [DONE]
 5. POST /update-profile
 
