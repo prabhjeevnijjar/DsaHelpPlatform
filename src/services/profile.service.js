@@ -9,7 +9,6 @@ module.exports = {
     async getProfileData (req, res, next) {
         await User.find({ _id: new ObjectId(req.user) }, 'firstname lastname email profileimage role')
         .then((data) => {
-            console.log("----",data)
             if(data?.length) {
                 responseHandler({
                     statusCode: 200,

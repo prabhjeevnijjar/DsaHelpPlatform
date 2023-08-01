@@ -1,6 +1,7 @@
 const Resource = require("../database/model/resource.model");
 const Bookmark = require("../database/model/bookmark.model");
 const User = require("../database/model/users.model");
+const { responseHandler } = require("../helpers/responseHandler");
 
 var ObjectId = require('mongodb').ObjectId; 
 
@@ -30,7 +31,6 @@ async function getResource(userId) {
         as : 'TEST'
       } }
     ]);
-    console.log("=-=-=-=-=-=-",data);
     return data;
   } else {
     return await Resource.find();
@@ -41,7 +41,6 @@ async function getBookmarkById(resid, res) {
   console.log({resid})
    await Bookmark.find({ "userId": new ObjectId(resid) })
    .then((dat) => {
-    console.log("======",dat)
     res.status(200).json({
       code: 200,
       success: true,
@@ -114,6 +113,41 @@ async function bookmarkRes(resid, usrid, res) {
   }
 }
 
+async function getResourceByAnId (req, res, next) {
+  console.log("::::::::::::::::::",req.query.resId)
+  await Resource.find({ _id: req.query.resId })
+  .then((data) => {
+    console.log("FOUND::::::::: ",data)
+      if(data?.length > 0) {
+          responseHandler({
+              statusCode: 200,
+              errCode: 200,
+              errMsg: "Resource Found",
+              errStatus: true,
+              data
+          }, req, res, next);
+      } else {
+          responseHandler({
+              statusCode: 200,
+              errCode: 400,
+              errMsg: "Resource not Found",
+              errStatus: false,
+              data:[]
+          }, req, res, next);
+      }
+    
+  })
+  .catch((err) => {
+      responseHandler({
+          statusCode: 404,
+          errCode: 404,
+          errMsg: "Resource Not Foundd",
+          errStatus: false,
+          data:[]
+      }, req, res, next);
+  })
+}
+
 async function upVote(resid, usrid, res) {
   if (!resid || !userid)
     res
@@ -171,5 +205,6 @@ module.exports = {
   upVote,
   downVote,
   bookmarkRes,
-  getBookmarkById
+  getBookmarkById,
+  getResourceByAnId
 };
