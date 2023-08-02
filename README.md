@@ -5,6 +5,7 @@ AUTHENTICATION PAGE
 
 HOMEPAGE
 1. Implement Elastic Search for searching posts.
+2. Implement pagination on home data
 
 PROFILE PAGE
 1. GET /profile [DONE]

@@ -17,9 +17,9 @@ async function createResource(data, res) {
   });
 }
 
-async function getResource(userId) {
-  console.log({userId})
-  if(userId) {
+async function getResource(req, res) {
+  // console.log({userId})
+  if(req?.userId) {
     // all likes, dislikes, comments, bookmarks by this user and throw into feed
     const data = await Resource.aggregate([
       { $match : { postedBy : userId } },
@@ -33,9 +33,12 @@ async function getResource(userId) {
     ]);
     return data;
   } else {
-    return await Resource.find();
+    const perPage = 10;
+    const page = Math.max(0, req.query?.page);
+    return await Resource.find().limit(perPage).skip(perPage * page).sort({ postedDate: -1 })
+    .then().catch(()=>{});
   }
-}
+} 
 
 async function getBookmarkById(resid, res) {
   console.log({resid})

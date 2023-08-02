@@ -33,7 +33,7 @@ module.exports = {
   },
 
   async getResources(req, res) { // get all
-    await getResource(req.user)
+    await getResource(req, res)
       .then((fetchedData) => {
         if (fetchedData) {
           res.status(200).json({
