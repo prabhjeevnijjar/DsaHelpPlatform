@@ -12,7 +12,7 @@ const {
 
 router.get(
   "/resource",  
-  (req, res, next) => authenticateTokenElective(req, res, next),
+  // (req, res, next) => authenticateTokenElective(req, res, next),
   (req, res) => getResources(req, res)
 );
 
