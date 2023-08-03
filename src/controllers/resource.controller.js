@@ -82,7 +82,7 @@ module.exports = {
     try {
       resid = req.query.resid;
       usrid = req.user;
-  
+  console.log("==",usrid,"===",resid)
       await bookmarkRes(resid, usrid, res);
     } catch (err) {
       res.status(404).json({

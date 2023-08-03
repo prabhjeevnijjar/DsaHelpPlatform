@@ -7,7 +7,7 @@ var ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     async getProfileData (req, res, next) {
-        await User.find({ _id: new ObjectId(req.user) }, 'firstname lastname email profileimage role')
+        await User.find({ _id: new ObjectId(req.user) }, 'username firstname lastname email profileimage role')
         .then((data) => {
             if(data?.length) {
                 responseHandler({
@@ -172,5 +172,54 @@ module.exports = {
         })
 
     },
+    async updateMyProfileData(req, res, next) {
+       const {userName, firstName, lastName, profileImg} = req.body;
+       const tempData = {};
+       if(userName) tempData.username = userName;
+       if(firstName) tempData.firstname = firstName;
+       if(lastName) tempData.lastname = lastName;
+       if(profileImg) tempData.profileimage = profileImg;
 
+       await User.find({ _id: new ObjectId(req.user) }, 'username')
+       .then((data) => {
+            if (data.length && tempData.username) {
+                User.findByIdAndUpdate({ _id: new ObjectId(req.user) }, { username: tempData.username})
+                .then((resp)=>{
+                    responseHandler({
+                        statusCode: 200,
+                        errCode: 201,
+                        errMsg: "User Updated Success",
+                        errStatus: true,
+                        data
+                    }, req, res, next);
+                })
+                .catch((err) => {
+                    responseHandler({
+                        statusCode: 404,
+                        errCode: 404,
+                        errMsg: "User Not Found",
+                        errStatus: false,
+                        data
+                    }, req, res, next);
+                })
+            } else {
+                responseHandler({
+                    statusCode: 200,
+                    errCode: 400,
+                    errMsg: "User not Found",
+                    errStatus: false,
+                    data
+                }, req, res, next);
+            }
+        })
+        .catch((err) => {
+            responseHandler({
+                statusCode: 404,
+                errCode: 404,
+                errMsg: "User Not Found",
+                errStatus: false,
+                data
+            }, req, res, next);
+        })
+    }
 }

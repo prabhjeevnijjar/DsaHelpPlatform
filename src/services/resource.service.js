@@ -117,10 +117,8 @@ async function bookmarkRes(resid, usrid, res) {
 }
 
 async function getResourceByAnId (req, res, next) {
-  console.log("::::::::::::::::::",req.query.resId)
   await Resource.find({ _id: req.query.resId })
   .then((data) => {
-    console.log("FOUND::::::::: ",data)
       if(data?.length > 0) {
           responseHandler({
               statusCode: 200,

@@ -6,7 +6,7 @@ async function authenticateToken(req, res, next) {
     const decodedEmail = jwtDecode( req.headers.authorization.split(" ")[1] ).email;
     
     const emailExist = await User.findOne({ email: decodedEmail });
-
+console.log({emailExist})
     if (!emailExist) {
       res.status(401).json({
         code: 401,

@@ -18,7 +18,7 @@ module.exports = {
     },
     async updateMyProfile (req, res, next) {
         try {
-            await updateMyProfileData();      // TODO: Update profile API
+            await updateMyProfileData(req, res, next);      // TODO: Update profile API
         } catch(err) {
             responseHandler({
                 statusCode: 404,
