@@ -6,7 +6,15 @@ router.get( "/",
     (req, res, next) => authenticateToken(req, res, next),
     (req, res, next) => getProfile(req, res, next)
 );
-
+/* body */
+/*
+{
+    userName: "",
+    firstName: "",
+    lastName: "",
+    profileImg: ""
+}
+*/
 router.post(
     "/",
     (req, res, next) => authenticateToken(req, res, next),

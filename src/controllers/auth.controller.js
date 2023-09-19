@@ -19,6 +19,7 @@ async function createNewUser(body, res) {
     lastname: lname,
     email: email,
     password: hashedPassword,
+    username: ''
   };
   await createUser(userBody, res);
 }
@@ -125,7 +126,7 @@ async function checkTokenIsValid(req, res) {
     } else {
       try {
         const token = await jwt.sign(
-          { first_name: emailExist.firstname, email: emailExist.email, userId: emailExist.id },
+          { username: emailExist.username || '', first_name: emailExist.firstname, last_name:emailExist.lastname, profileimage:emailExist.profileimage, email: emailExist.email, userId: emailExist.id },
           "process.env.SECRET"
         );
         res.status(200).json({

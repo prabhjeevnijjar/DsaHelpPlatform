@@ -1,10 +1,12 @@
+const { responseHandler } = require("../helpers/responseHandler");
 const {
   createResource,
   getResource,
   upVote,
   downVote,
   bookmarkRes,
-  getBookmarkById
+  getBookmarkById,
+  getResourceByAnId
 } = require("../services/resource.service");
 
 module.exports = {
@@ -30,11 +32,8 @@ module.exports = {
     }
   },
 
-  async getResources(req, res) {
-    console.log("=========",req.user) 
-    // if we receive user id here then we find user likes, dislikes, bookmarks and then send them back as true
-
-    await getResource(req.user)
+  async getResources(req, res) { // get all
+    await getResource(req, res)
       .then((fetchedData) => {
         if (fetchedData) {
           res.status(200).json({
@@ -65,11 +64,25 @@ module.exports = {
       });
   },
 
+  async getResourceById(req, res) {
+    try {
+      await getResourceByAnId(req, res)
+    } catch(err) {
+      responseHandler({
+          statusCode: 404,
+          errCode: 404,
+          errMsg: "Something went wrongg",
+          errStatus: false,
+          data: err
+    }, req, res);
+   }
+  },
+
   async bookmarkResource(req, res) {
     try {
       resid = req.query.resid;
       usrid = req.user;
-  
+  console.log("==",usrid,"===",resid)
       await bookmarkRes(resid, usrid, res);
     } catch (err) {
       res.status(404).json({

@@ -6,14 +6,17 @@ const {
   upvote,
   downvote,
   bookmarkResource,
-  getBookmarks
+  getBookmarks,
+  getResourceById
 } = require("../../controllers/resource.controller");
 
 router.get(
   "/resource",  
-  (req, res, next) => authenticateTokenElective(req, res, next),
-  getResources
+  // (req, res, next) => authenticateTokenElective(req, res, next),
+  (req, res) => getResources(req, res)
 );
+
+router.get("/resource-id", (req, res) => getResourceById(req, res));
 
 router.post(
   "/resource",

@@ -1,6 +1,7 @@
 const Resource = require("../database/model/resource.model");
 const Bookmark = require("../database/model/bookmark.model");
 const User = require("../database/model/users.model");
+const { responseHandler } = require("../helpers/responseHandler");
 
 var ObjectId = require('mongodb').ObjectId; 
 
@@ -16,9 +17,9 @@ async function createResource(data, res) {
   });
 }
 
-async function getResource(userId) {
-  console.log({userId})
-  if(userId) {
+async function getResource(req, res) {
+  // console.log({userId})
+  if(req?.userId) {
     // all likes, dislikes, comments, bookmarks by this user and throw into feed
     const data = await Resource.aggregate([
       { $match : { postedBy : userId } },
@@ -30,18 +31,19 @@ async function getResource(userId) {
         as : 'TEST'
       } }
     ]);
-    console.log("=-=-=-=-=-=-",data);
     return data;
   } else {
-    return await Resource.find();
+    const perPage = 10;
+    const page = Math.max(0, req.query?.page);
+    return await Resource.find().limit(perPage).skip(perPage * page).sort({ postedDate: -1 })
+    .then().catch(()=>{});
   }
-}
+} 
 
 async function getBookmarkById(resid, res) {
   console.log({resid})
    await Bookmark.find({ "userId": new ObjectId(resid) })
    .then((dat) => {
-    console.log("======",dat)
     res.status(200).json({
       code: 200,
       success: true,
@@ -114,6 +116,39 @@ async function bookmarkRes(resid, usrid, res) {
   }
 }
 
+async function getResourceByAnId (req, res, next) {
+  await Resource.find({ _id: req.query.resId })
+  .then((data) => {
+      if(data?.length > 0) {
+          responseHandler({
+              statusCode: 200,
+              errCode: 200,
+              errMsg: "Resource Found",
+              errStatus: true,
+              data
+          }, req, res, next);
+      } else {
+          responseHandler({
+              statusCode: 200,
+              errCode: 400,
+              errMsg: "Resource not Found",
+              errStatus: false,
+              data:[]
+          }, req, res, next);
+      }
+    
+  })
+  .catch((err) => {
+      responseHandler({
+          statusCode: 404,
+          errCode: 404,
+          errMsg: "Resource Not Foundd",
+          errStatus: false,
+          data:[]
+      }, req, res, next);
+  })
+}
+
 async function upVote(resid, usrid, res) {
   if (!resid || !userid)
     res
@@ -171,5 +206,6 @@ module.exports = {
   upVote,
   downVote,
   bookmarkRes,
-  getBookmarkById
+  getBookmarkById,
+  getResourceByAnId
 };

@@ -6,7 +6,7 @@ async function authenticateToken(req, res, next) {
     const decodedEmail = jwtDecode( req.headers.authorization.split(" ")[1] ).email;
     
     const emailExist = await User.findOne({ email: decodedEmail });
-
+console.log({emailExist})
     if (!emailExist) {
       res.status(401).json({
         code: 401,
@@ -31,7 +31,7 @@ async function authenticateToken(req, res, next) {
 async function authenticateTokenElective(req, res, next) { 
   if (req.headers.authorization && req.headers.authorization.split(" ")[1]) {
     const decodedEmail = jwtDecode( req.headers.authorization.split(" ")[1] ).email;
-    const emailExist = await User.findOne({ email: decodedEmail });
+    const emailExist = await User.findOne({ email: decodedEmail }).then(()=>{}).catch(()=>{});
 
     if (!emailExist) next();
     else {
