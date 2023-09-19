@@ -7,9 +7,7 @@ const {
 module.exports = {
   async postComment(req, res, next) {
     if (!req.query.resourceId || !req.user || !req.body.commentText)
-        res
-          .status(404)
-          .json({ success: 0, message: "resource id or user id or comment body not found" });
+        res .status(404).json({ success: 0, message: "resource id or user id or comment body not found" });
     else {
       try {
         let data = {

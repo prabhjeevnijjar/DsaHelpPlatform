@@ -1,8 +1,5 @@
 const router = require("express").Router();
-const {
-  postComment,
-  getComment,
-} = require("../../controllers/comment.controller");
+const { postComment, getComment,} = require("../../controllers/comment.controller");
 const { authenticateToken } = require("../../middlewares/authentication/auth");
 
 router.post(
@@ -11,6 +8,10 @@ router.post(
   (req, res, next) => postComment(req, res, next)
 );
 
-router.get("/comment", authenticateToken, getComment);
+router.get(
+  "/comment",
+  authenticateToken,
+  (req, res, next) => getComment(req, res, next)
+);
 
 module.exports = router;

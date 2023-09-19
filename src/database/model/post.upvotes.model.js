@@ -5,7 +5,7 @@ const resourceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Resources"
     },
-    upvotedB
+    upvotedBy: {}
 })
 
 module.exports = mongoose.model("Resource", resourceSchema);

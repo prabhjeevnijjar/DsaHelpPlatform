@@ -33,7 +33,11 @@ router.get(
   (req, res) => getBookmarks(req, res)
 )
 
-router.put("/up-vote", authenticateToken, upvote);
+router.put(
+  "/up-vote",
+  (req, res, next) => authenticateToken(req, res, next),
+  (req, res) => upvote(req, res)
+  );
 
 router.put("/down-vote", authenticateToken, downvote);
 
