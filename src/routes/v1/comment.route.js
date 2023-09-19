@@ -10,7 +10,6 @@ router.post(
 
 router.get(
   "/comment",
-  authenticateToken,
   (req, res, next) => getComment(req, res, next)
 );
 

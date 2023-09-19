@@ -2,7 +2,8 @@ const User = require("../../database/model/users.model");
 const { default: jwtDecode } = require("jwt-decode");
 
 async function authenticateToken(req, res, next) {
-  if (req.headers.authorization && req.headers.authorization.split(" ")[1]) {
+  console.log("=-=-=",req.headers.authorization.split(" ")[1])
+  if (req.headers.authorization && req.headers.authorization.split(" ")[1] && req.headers.authorization.split(" ")[1] !== 'undefined') {
     const decodedEmail = jwtDecode( req.headers.authorization.split(" ")[1] ).email;
     
     const emailExist = await User.findOne({ email: decodedEmail });

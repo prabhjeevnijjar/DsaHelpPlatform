@@ -4,8 +4,8 @@ const Resource = require("../database/model/resource.model");
 async function createComment(data, res) {
   const newComment = await new Comment(data);
   await newComment.save().then((newData) => {
-    res.status(201).json({ success: 1, message: "Published new comment" });
-  });
+    res.status(201).json({data:newData, code: 201, success: true,  message: "Published new comment" });
+  }).catch((err)=>{});
 }
 
 async function getCommentByResId(resId, res) {

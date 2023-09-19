@@ -7,8 +7,9 @@ const {
 module.exports = {
   async postComment(req, res, next) {
     if (!req.query.resourceId || !req.user || !req.body.commentText)
-        res .status(404).json({ success: 0, message: "resource id or user id or comment body not found" });
-    else {
+    {
+        res.status(404).json({ code: 400, success: false, message: "resource id or user id or comment body not found" });
+      } else {
       try {
         let data = {
           userId: req.user,
@@ -19,20 +20,14 @@ module.exports = {
         };
         console.log(data);
         await createComment(data, res)
-          .then(
-            await updateCommentCount(req.query.resourceId,res)
-              .then()
-              .catch((err)=>{
-                console.log(err);
-              })
-          )
+          .then((data)=>{})
           .catch((err) => {
             console.log(err);
           });
 
       } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error });
+        res.status(404).json({ code: 400, success: false, message: error });
         next(error);
       }
     }
@@ -44,7 +39,7 @@ module.exports = {
     await getCommentByResId(resId, res)
       .then((fetchedData) => {
         if (fetchedData) {
-          res.status(200).json({ success: 1, data: fetchedData });
+          res.status(200).json({  code: 200, success: true, success: 1, data: fetchedData });
         } else {
           res
             .status(404)
