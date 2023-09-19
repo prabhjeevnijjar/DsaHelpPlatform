@@ -12,6 +12,8 @@ module.exports = {
       try {
         let data = {
           userId: req.user,
+          userProfileImg: req.profileimage || '',
+          userName: req.username || '',
           resourceId: req.query.resourceId,
           commentText: req.body.commentText,
         };

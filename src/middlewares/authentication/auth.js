@@ -15,7 +15,10 @@ console.log({emailExist})
         status: false,
       });
     } else {
+      console.log({emailExist})
       req.user = emailExist._id;
+      req.userName = emailExist.username || '';
+      req.profileimage = emailExist.profileimage || '';
       next();
     }
   } else {

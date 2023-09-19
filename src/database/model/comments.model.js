@@ -10,6 +10,13 @@ const commentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
     },
+    userName: {
+      type: String,
+    },
+    userProfileImg :{
+      data: Buffer,
+      contentType: String
+    },
     commentText: {
       type: String,
       required: true,
