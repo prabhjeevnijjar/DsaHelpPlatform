@@ -38,6 +38,6 @@ app.use("/homepage", resource);
 app.use("/homepage", comment);
 app.use("/profile", profile);
 
-app.listen(process.env.SERVER_PORT || 4000, () => {
-  console.log("connected to port: ", process.env.SERVER_PORT);
+app.listen(process.env.SERVER_PORT || 3001, () => {
+  console.log("connected to port: ", process.env.SERVER_PORT || 3001);
 });
