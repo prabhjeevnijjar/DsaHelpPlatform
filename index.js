@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+
 mongoose.connect(
   process.env.MONGODB_LOCAL_ADDRESS ||
     "mongodb+srv://prabhjeev:admin@testingcluster0.0fpxp.mongodb.net/?retryWrites=true&w=majority",
@@ -37,6 +38,6 @@ app.use("/homepage", resource);
 app.use("/homepage", comment);
 app.use("/profile", profile);
 
-app.listen(process.env.SERVER_PORT || 3001, () => {
+app.listen(process.env.SERVER_PORT || 4000, () => {
   console.log("connected to port: ", process.env.SERVER_PORT);
 });

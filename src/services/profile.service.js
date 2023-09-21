@@ -174,30 +174,32 @@ module.exports = {
     },
     async updateMyProfileData(req, res, next) {
        const {userName, firstName, lastName, profileImg} = req.body;
+console.log("============================",req.file)
        const tempData = {};
        if(userName) tempData.username = userName;
        if(firstName) tempData.firstname = firstName;
        if(lastName) tempData.lastname = lastName;
-       if(profileImg) tempData.profileimage = profileImg;
+       if(req.file) tempData.profileimage = req.file;
 
+console.log({tempData})
        await User.find({ _id: new ObjectId(req.user) }, 'username')
        .then((data) => {
-            if (data.length && tempData.username) {
-                User.findByIdAndUpdate({ _id: new ObjectId(req.user) }, { username: tempData.username})
+            if (data.length) {
+                User.findByIdAndUpdate({ _id: new ObjectId(req.user) }, { tempData})
                 .then((resp)=>{
                     responseHandler({
                         statusCode: 200,
                         errCode: 201,
                         errMsg: "User Updated Success",
                         errStatus: true,
-                        data
+                        data: resp
                     }, req, res, next);
                 })
                 .catch((err) => {
                     responseHandler({
                         statusCode: 404,
                         errCode: 404,
-                        errMsg: "User Not Found",
+                        errMsg: "User Not Found3",
                         errStatus: false,
                         data
                     }, req, res, next);
@@ -206,7 +208,7 @@ module.exports = {
                 responseHandler({
                     statusCode: 200,
                     errCode: 400,
-                    errMsg: "User not Found",
+                    errMsg: "User not Found2",
                     errStatus: false,
                     data
                 }, req, res, next);
@@ -216,7 +218,7 @@ module.exports = {
             responseHandler({
                 statusCode: 404,
                 errCode: 404,
-                errMsg: "User Not Found",
+                errMsg: "User Not Found1",
                 errStatus: false,
                 data
             }, req, res, next);

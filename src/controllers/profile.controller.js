@@ -18,7 +18,21 @@ module.exports = {
     },
     async updateMyProfile (req, res, next) {
         try {
-            await updateMyProfileData(req, res, next);      // TODO: Update profile API
+            await updateMyProfileData(req, res, next);
+        } catch(err) {
+            responseHandler({
+                statusCode: 404,
+                errCode: 404,
+                errMsg: "Something went wrong",
+                errStatus: false,
+                data: ''
+            }, req, res, next);
+        }
+    },
+    async updateMyProfileImg (req, res, next) {
+        console.log("here",req.file)
+        try {
+            await updateMyProfileData(req, res, next);      
         } catch(err) {
             responseHandler({
                 statusCode: 404,

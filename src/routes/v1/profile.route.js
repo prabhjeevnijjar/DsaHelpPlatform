@@ -1,24 +1,28 @@
 const router = require("express").Router();
+const multer = require("multer");
+
 const { authenticateToken } = require("../../middlewares/authentication/auth");
-const {getProfile, updateMyProfile, getMyPosts, getMyLiked, getMyCommented} = require("../../controllers/profile.controller");
+const {getProfile, updateMyProfile, getMyPosts, getMyLiked, getMyCommented, updateMyProfileImg} = require("../../controllers/profile.controller");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 router.get( "/",
     (req, res, next) => authenticateToken(req, res, next),
     (req, res, next) => getProfile(req, res, next)
 );
-/* body */
-/*
-{
-    userName: "",
-    firstName: "",
-    lastName: "",
-    profileImg: ""
-}
-*/
+
 router.post(
     "/",
     (req, res, next) => authenticateToken(req, res, next),
     (req, res, next) => updateMyProfile(req, res, next)
+);
+
+router.post(
+    "/profile-img",
+    upload.single("profileImg"), // upload detects image with name profileImg
+    (req, res, next) => authenticateToken(req, res, next),
+    (req, res, next) => updateMyProfileImg(req, res, next)
 );
 
 router.get(
